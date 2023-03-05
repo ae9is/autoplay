@@ -1,0 +1,17 @@
+{
+  "name": "autoplay",
+  "private": "true",
+  "version": "0.0.0",
+  "description": "Puppeteer automation in Chrome to autoplay video",
+  "main": "watch.js",
+  "scripts": {
+    "run": "node watch.js"
+  },
+  "author": "",
+  "license": "Unlicense",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "fs": "^0.0.1-security",
+    "puppeteer-core": "^19.7.2"
+  }
+}
