@@ -2,31 +2,37 @@
 
 Puppeteer automation in Chrome to autoplay video.
 
-Customise for your target content by editing the script's CSS selectors and `process.env.URL`.
+Customise for your target content by editing the CSS selectors and other constants in `src/constants.ts`
 
-## Install
+## Setup
 
 1. Install dependencies
 
-```bash
-npm i
-```
+    ```bash
+    npm i
+    ```
 
-2. _(Optional)_ Setup a new Chrome user data directory and profile
+2.  _(Optional)_ Setup a specific Chrome user data directory and profile
 
-3. Set at least these .env variables:
+    Set .env variables:
 
-```bash
-USER_DATA_DIR
-PROFILE_DIR
-ACCOUNT_NAME
-PASSWORD
-```
+    ```bash
+    USER_DATA_DIR
+    PROFILE_DIR
+    ```
 
-4. Enter watch times in `schedule.json`
+3. Login to video site with Chrome user:
+
+    1. Enter a dummy watch time (for ex. current date time) in `schedule.json`
+    2. Run the watcher script via `npm run watch`
+    3. Open a new tab and login to watch page
 
 ## Run
 
-```bash
-npm run watch
-```
+1. Update watch times in `schedule.json`
+
+2. Run watcher
+
+    ```bash
+    npm run watch
+    ```
