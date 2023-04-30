@@ -1,9 +1,9 @@
 export default class Logger {
-  static log(text: string) {
-    console.log(text)
+  static log(entry: any) {
+    console.log(entry)
   }
 
-  static error(text: string) {
-    console.error(text)
+  static error(entry: any) {
+    console.error(entry)
   }
 }
