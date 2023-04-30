@@ -1,19 +1,27 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-export const url = process.env.URL || 'https://overwatchleague.com/en-us/'
+export const scheduleUrl = process.env.SCHED_URL || 'https://overwatchleague.com/en-us'
+export const watchUrl = process.env.WATCH_URL || 'https://www.youtube.com/@overwatchleague'
 export const outImg = process.env.OUT_IMG || 'snapshot.png'
 export const userDataDir = process.env.USER_DATA_DIR || './profile'
 // profile dir within userDataDir for ex: ./profile/MyProfile
 export const profileDir = process.env.PROFILE_DIR || 'MyProfile'
 export const execPath = process.env.EXEC_PATH || 'google-chrome'
-export const accountName = process.env.ACCOUNT_NAME
-export const password = process.env.PASSWORD
+export const accountName = process.env.ACCOUNT_NAME || ''
+export const password = process.env.PASSWORD || ''
+export const scheduleFile = process.env.SCHED_FILE || 'schedule.json'
 
-export const profileLoginButtonSearch = 'div[id="login-dropdown-button-testId"]'
-export const loginButtonSearch = 'a[id="login-button-testId"]'
-export const loginNameBannerSearch = 'div#login-dropdown-button-testId div#login.cHVkMG'
-export const accountNameInputSearch = 'input#accountName'
-export const passwordInputSearch = 'input#password'
-export const loginPageLoginButtonSearch = 'button#submit'
-export const videoElementSearch = 'iframe.ryXSX'
+// Watch page selectors
+export const avatarButtonSearch = 'button#avatar-btn'
+export const loginButtonSearch = 'a[aria-label="Sign in"]'
+export const accountNameInputSearch = 'input[type="email"]'
+export const nextButtonSearch = '//span[contains(., "Next")]'
+export const passwordInputSearch = 'input[type="password"]'
+export const videoElementSearch = 'span[aria-label="LIVE"]'
+
+// Schedule page selectors
+export const scheduledDateTimeSearch = 'div[class^="match-cardstyles__Left"]' // fJkjEU
+export const scheduledDateTimeChildSearch = 'p[class^="match-cardstyles__LeftScheduledText"]'
+export const scheduledDateSearch = 'div[class^="match-cardstyles__Left"] > p[class^="match-cardstyles__LeftScheduledText"]:nth-child(1)' // hfcpxu
+export const scheduledTimeSearch = 'div[class^="match-cardstyles__Left"] > p[class^="match-cardstyles__LeftScheduledText"]:nth-child(2)' // fuQsGn
