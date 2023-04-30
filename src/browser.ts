@@ -1,13 +1,18 @@
-import puppeteer, { Browser as PuppeteerBrowser } from 'puppeteer-core'
+//import puppeteer, { Page, Browser as PuppeteerBrowser } from 'puppeteer-core'
+import puppeteer from 'puppeteer-extra'
+import { Browser, Page } from 'puppeteer-extra-plugin/dist/puppeteer'
+import StealthPlugin from 'puppeteer-extra-plugin-stealth'
+puppeteer.use(StealthPlugin())
 import * as config from './config'
 import Logger from './logger'
+import { shortWait } from './time'
 
 // Private constructor. Get instances using Browser.new() not Browser().
-export class Browser {
+export class BrowserFactory {
   #browser
 
   // @private
-  private constructor(browser: PuppeteerBrowser) {
+  private constructor(browser: Browser) {
     this.#browser = browser
   }
 
@@ -18,6 +23,7 @@ export class Browser {
       '--profile-directory=' + config.profileDir, // Can be omitted if Default
       '--enable-sync',
       '--start-maximized', // Needed so that with viewport res forces desktop not mobile layout
+      '--no-sandbox', // Google account logins blocked from automation runs
     ]
     /*
     const ignoredArgs = [
@@ -38,7 +44,7 @@ export class Browser {
       args: extraArgs,
     })
 
-    return new Browser(browser)
+    return new BrowserFactory(browser)
   }
 
   close = () => {
@@ -62,5 +68,13 @@ export class Browser {
     await page.setViewport({ width: 1366, height: 768, deviceScaleFactor: 1 })
 
     return page
+  }
+
+  takeScreenshotAndCloseBrowser = async (page: Page) => {
+    Logger.log('Taking page screenshot...')
+    await page.screenshot({ path: config.outImg })
+    await shortWait(page)
+    Logger.log('Closing session')
+    this.close()
   }
 }
