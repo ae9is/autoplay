@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-export const scheduleUrl = process.env.SCHED_URL || 'https://overwatchleague.com/en-us'
+export const scheduleUrl = process.env.SCHED_URL || 'https://overwatchleague.com/en-us/schedule'
 export const watchUrl = process.env.WATCH_URL || 'https://www.youtube.com/@overwatchleague'
 export const outImg = process.env.OUT_IMG || 'snapshot.png'
 export const userDataDir = process.env.USER_DATA_DIR || './profile'
@@ -21,7 +21,7 @@ export const passwordInputSearch = 'input[type="password"]'
 export const videoElementSearch = 'span[aria-label="LIVE"]'
 
 // Schedule page selectors
-export const scheduledDateTimeSearch = 'div[class^="match-cardstyles__Left"]' // fJkjEU
+export const scheduledDateTimeSearch = 'div[class$="fJkjEU"]' // 'div[class^="match-cardstyles__Left"]'
 export const scheduledDateTimeChildSearch = 'p[class^="match-cardstyles__LeftScheduledText"]'
 export const scheduledDateSearch = 'div[class^="match-cardstyles__Left"] > p[class^="match-cardstyles__LeftScheduledText"]:nth-child(1)' // hfcpxu
 export const scheduledTimeSearch = 'div[class^="match-cardstyles__Left"] > p[class^="match-cardstyles__LeftScheduledText"]:nth-child(2)' // fuQsGn
