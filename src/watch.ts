@@ -55,7 +55,7 @@ async function watchPage(page: Page) {
     Logger.log('Current time: ' + new Date())
     const dates: Date[] = schedule.dates.map((s: string) => new Date(s))
     Logger.log('Loaded upcoming match times: ') // + dates)
-    dates.forEach(d => Logger.log(d.toISOString()))
+    dates.forEach(d => Logger.log(d.toISOString() + ' / ' + d.toLocaleString()))
 
     // Compare dates with current time to find next...
     //
