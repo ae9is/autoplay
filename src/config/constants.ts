@@ -21,7 +21,8 @@ export const passwordInputSearch = 'input[type="password"]'
 export const videoElementSearch = 'span[aria-label="LIVE"]'
 
 // Schedule page selectors
-export const scheduledDateTimeSearch = 'div[class$="fJkjEU"]' // 'div[class^="match-cardstyles__Left"]'
-export const scheduledDateTimeChildSearch = 'p[class^="match-cardstyles__LeftScheduledText"]'
-export const scheduledDateSearch = 'div[class^="match-cardstyles__Left"] > p[class^="match-cardstyles__LeftScheduledText"]:nth-child(1)' // hfcpxu
-export const scheduledTimeSearch = 'div[class^="match-cardstyles__Left"] > p[class^="match-cardstyles__LeftScheduledText"]:nth-child(2)' // fuQsGn
+export const scheduledDateTimeSearch = 'div[data-testid="collapsableSection"]' // collapsable sic
+export const scheduledDateSearch = 'div[class$="lfewHh"]'
+export const scheduledTimeSearch = 'div[data-testid="matchStatus"] > div:nth-child(2)'
+export const upcomingMatchesButtonSearch = '//button[contains(., "Upcoming Matches")]'
+

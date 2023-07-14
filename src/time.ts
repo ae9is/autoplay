@@ -45,3 +45,8 @@ export function toLocalISOString(datetime: string) {
   Logger.log('localDate: ' + localDate)
   return localDate.toISOString().slice(0, -1)
 }
+
+export function currentHoursMinutesAmPm() {
+  const date = new Date()
+  return dayjs(date).format('h:mm A')
+}

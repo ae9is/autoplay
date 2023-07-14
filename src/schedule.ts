@@ -2,7 +2,7 @@
 import fs from 'fs'
 import { BrowserFactory } from './browser'
 import * as config from './config'
-import { toISO8601String } from './time'
+import { currentHoursMinutesAmPm, shortWait, toISO8601String } from './time'
 import Logger from './logger'
 import { filterDups, filterNull } from './util'
 
@@ -32,30 +32,45 @@ const testHtml = `<!DOCTYPE html><html><body>
   //const week = '2'
   //const urlForWeek = config.scheduleUrl + '?stage=regular_season&week=' + week + '&team=allteams'
 
+  // Go to main schedule page
   const url = config.scheduleUrl
   const browser = await BrowserFactory.new()
   const page = await browser.getNewPage()
   Logger.log('Visiting: ' + url)
   await page.goto(url)
+  // Click upcoming matches button
+  const upcomingMatchesButtons = await page.$x(config.upcomingMatchesButtonSearch)
+  if (upcomingMatchesButtons?.length > 0) {
+    Logger.log('Navigating to upcoming matches to resolve more matches...')
+    await upcomingMatchesButtons?.[0].click()
+    await shortWait(page)
+  }
   //page.setContent(testHtml)
   Logger.log('Taking page screen shot...')
   await page.screenshot({ path: config.outImg, fullPage: true })
 
   Logger.log('Crawling page for times ...')
-  const dateTimeCards = await page.$$(config.scheduledDateTimeSearch)
-  const promises = dateTimeCards.flatMap(async card => {
-    const children = await card.$$('p')
-    if (children?.length >= 2) {
-      const [dateChild, timeChild] = children.slice(0, 2)
-      return {
+  const datesNullable: (DateTime | null)[] = []
+  const dateSections = await page.$$(config.scheduledDateTimeSearch)
+  for (const section of dateSections) {
+    const dateElement = await section.$(config.scheduledDateSearch)
+    const timeElements = await section.$$(config.scheduledTimeSearch)
+    if (dateElement && timeElements?.length >= 1) {
+      for (const timeEl of timeElements) {
         // Convert mixed case to upper for easy duplicates filtering
-        date: (await (await dateChild.getProperty('innerText')).jsonValue())?.toUpperCase(),
-        time: (await (await timeChild.getProperty('innerText')).jsonValue())?.toUpperCase(),
+        const date = (await (await dateElement.getProperty('innerText')).jsonValue())?.toUpperCase()
+        let time = (await (await timeEl.getProperty('innerText')).jsonValue())?.toUpperCase()
+        if (time === 'LIVE NOW') {
+          time = currentHoursMinutesAmPm()
+        }
+        const dateTime = {
+          date,
+          time,
+        }
+        datesNullable.push(dateTime)
       }
     }
-    return null
-  })
-  const datesNullable: (DateTime | null)[] = await Promise.all(promises)
+  }
   // Discard nulls and duplicates from the Handle's retrieved by puppeteer parse
   const dateTimes: DateTime[] = filterDups(filterNull(datesNullable))
 
